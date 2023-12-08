@@ -33,26 +33,34 @@ public class DogMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Check to see if the Dog should be moving
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
         {
             isMoving = !isMoving;
         }
 
+        //Move Forward
         if (Input.GetKey(KeyCode.W))
         {
             moveForward(forwardSpeed);
             isMoving = true;
         }
+
+        //Move Backward
         if (Input.GetKey(KeyCode.S))
         {
             moveBackward(backwardSpeed);
             isMoving = true;
         }
+
+        //Strafe Left
         if (Input.GetKey(KeyCode.A))
         {
             strafeLeft(strafeSpeed);
             isMoving = true;
         }
+
+        //Strafe Right
         if (Input.GetKey(KeyCode.D))
         {
             strafeRight(strafeSpeed);

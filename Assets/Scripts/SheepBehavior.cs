@@ -14,37 +14,46 @@ public class SheepBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Get Sheep RigidBody
         rigbod = GetComponent<Rigidbody>();
+
+        //Start the Graze() Coroutine
         StartCoroutine(Graze());
     }
 
     IEnumerator Graze()
     {
+        //Choose one of three actions
         int actionChoice = Random.Range(1, 4);
-        Debug.Log(actionChoice);
+        //Set countDown timer
         float countDown = Random.Range(moveTimerMin, moveTimerMax);
         switch (actionChoice)
         {
             case 1:
-                Debug.Log("Moving");
+                //Move the sheep forward over a period of time
                 while(countDown > 0)
                 {
                     rigbod.AddForce(transform.forward * 650 * Time.smoothDeltaTime, ForceMode.Acceleration);
                     countDown -= Time.smoothDeltaTime;
                     yield return null;
                 }
+                //Stop Sheep from moving when movement is completed
                 rigbod.velocity = Vector3.zero;
                 break;
             case 2:
-                Debug.Log("Rotating");
+                //Rotate the sheep
                 float degreesMoved = 0;
+                //Set the random degrees the sheep will rotate
                 degreesToMove = Random.Range(1, 180);
+
+                //Randomly choose negative or positive movement for clockwise and counterclockwise rotation
                 int chooseRotation = Random.Range(1, 3);
-                int rotationDirection = 1;
+                int rotationDirection;
                 if (chooseRotation == 1) rotationDirection = 1;
                 else rotationDirection = -1; 
 
                 Vector3 rotate = new Vector3(0, rotationDirection, 0);
+                //Rotate the sheep over a period of time
                 while (degreesMoved < degreesToMove)
                 {
                     transform.Rotate(rotate);
@@ -54,7 +63,7 @@ public class SheepBehavior : MonoBehaviour
                 yield return new WaitForSeconds(countDown);
                 break;
             case 3:
-                Debug.Log("Pausing");
+                //Pause the sheep for a period of time
                 rigbod.velocity = Vector3.zero;
                 while (countDown > 0)
                 {
@@ -65,6 +74,7 @@ public class SheepBehavior : MonoBehaviour
             default:
                 break;
         }
+        //Restart the Graze() Coroutine
         StartCoroutine(Graze());
 
     }
