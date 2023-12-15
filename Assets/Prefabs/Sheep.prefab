@@ -64,6 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveTimerMin: 3
   moveTimerMax: 7
+  barkDistance: 1
 --- !u!1 &4372892040195479298
 GameObject:
   m_ObjectHideFlags: 0

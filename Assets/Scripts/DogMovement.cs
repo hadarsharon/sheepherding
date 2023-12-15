@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DogMovement : MonoBehaviour
 {
@@ -67,6 +68,12 @@ public class DogMovement : MonoBehaviour
             isMoving = true;
         }
 
+        //Bark
+        if (Input.GetKey(KeyCode.Space))
+        {
+            
+        }
+
         // Stop the rigidbody from moving if no buttons are pressed
         if (!isMoving)
         {
@@ -117,5 +124,10 @@ public class DogMovement : MonoBehaviour
     {
         Vector3 right = new Vector3(1, 0, 0);
         rigBod.AddForce(right * strafeSpeed, ForceMode.Acceleration);
+    }
+
+    void bark()
+    {
+
     }
 }

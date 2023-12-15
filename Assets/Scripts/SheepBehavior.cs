@@ -1,21 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class SheepBehavior : MonoBehaviour
 {
     [SerializeField]
-    float moveTimerMin, moveTimerMax;
+    float grazeTimerMin = 3, grazeTimerMax = 7;
 
-    float degreesToMove;
+    [SerializeField]
+    float obedienceTimerMin = 3, obedienceTimerMax = 7;
+
+    [SerializeField]
+    float barkDistance;
+
+    bool hasRunAway = false;
 
     Rigidbody rigbod;
+    Rigidbody dogBod;
+
+    private void OnEnable()
+    {
+        FindObjectOfType<EventManager>().OnBark += RunAway;
+    }
+    private void OnDisable()
+    {
+        FindObjectOfType<EventManager>().OnBark -= RunAway;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
         //Get Sheep RigidBody
         rigbod = GetComponent<Rigidbody>();
+
+        //Get the Dog
+        dogBod = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
 
         //Start the Graze() Coroutine
         StartCoroutine(Graze());
@@ -26,12 +48,12 @@ public class SheepBehavior : MonoBehaviour
         //Choose one of three actions
         int actionChoice = Random.Range(1, 4);
         //Set countDown timer
-        float countDown = Random.Range(moveTimerMin, moveTimerMax);
+        float countDown = Random.Range(grazeTimerMin, grazeTimerMax);
         switch (actionChoice)
         {
             case 1:
                 //Move the sheep forward over a period of time
-                while(countDown > 0)
+                while (countDown > 0)
                 {
                     rigbod.AddForce(transform.forward * 650 * Time.smoothDeltaTime, ForceMode.Acceleration);
                     countDown -= Time.smoothDeltaTime;
@@ -44,20 +66,20 @@ public class SheepBehavior : MonoBehaviour
                 //Rotate the sheep
                 float degreesMoved = 0;
                 //Set the random degrees the sheep will rotate
-                degreesToMove = Random.Range(1, 180);
+                float degreesToMove = Random.Range(1, 180);
 
                 //Randomly choose negative or positive movement for clockwise and counterclockwise rotation
                 int chooseRotation = Random.Range(1, 3);
                 int rotationDirection;
                 if (chooseRotation == 1) rotationDirection = 1;
-                else rotationDirection = -1; 
+                else rotationDirection = -1;
 
                 Vector3 rotate = new Vector3(0, rotationDirection, 0);
                 //Rotate the sheep over a period of time
                 while (degreesMoved < degreesToMove)
                 {
                     transform.Rotate(rotate);
-                    degreesMoved ++;
+                    degreesMoved++;
                     yield return new WaitForSeconds(0.02f);
                 }
                 yield return new WaitForSeconds(countDown);
@@ -77,5 +99,47 @@ public class SheepBehavior : MonoBehaviour
         //Restart the Graze() Coroutine
         StartCoroutine(Graze());
 
+    }
+
+    public void RunAway()
+    {
+        float dogDistance = Vector3.Distance(dogBod.position, rigbod.position);
+        if (dogDistance <= barkDistance)
+        {
+            StartCoroutine(RunAwayCoroutine());
+       }
+    }
+
+    IEnumerator RunAwayCoroutine()
+    {
+        print("Run Away!");
+        //Get the direction of the Dog in relation to the Sheep
+        Vector3 direction = dogBod.position - rigbod.position;
+        direction.Normalize();
+        // Calculate the rotation to face the opposite direction
+        Quaternion rotation = Quaternion.LookRotation(-direction);
+        //Rotate the sheep over a period of time
+        while (Quaternion.Angle(transform.rotation, rotation) > 0.1f)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 180f * Time.deltaTime);
+            yield return new WaitForSeconds(0.02f); // Adjust speed here as well
+        }
+
+        //Set countDown timer
+        float countDown = Random.Range(obedienceTimerMin, obedienceTimerMax);
+        //Run Away
+        while (countDown > 0)
+        {
+            rigbod.AddForce(transform.forward * 650 * Time.smoothDeltaTime, ForceMode.Acceleration);
+            countDown -= Time.smoothDeltaTime;
+            yield return null;
+        }
+        rigbod.velocity = Vector3.zero;
+        //Return to Grazing once obedience timer runs out
+        yield return new WaitForSeconds(countDown);
+        Graze();
+
+
+        yield return null;
     }
 }
