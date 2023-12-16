@@ -30,15 +30,16 @@ public class DogMovement : MonoBehaviour
     {
         followCursor();
 
+        //Check to see if the Dog should be moving
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
+        {
+            rigBod.velocity = Vector3.zero;
+        }
+
     }
 
     private void FixedUpdate()
     {
-        //Check to see if the Dog should be moving
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
-        {
-            isMoving = !isMoving;
-        }
 
         //Move Forward
         if (Input.GetKey(KeyCode.W))

@@ -9,6 +9,7 @@ public class SheepZone : MonoBehaviour
 
     [SerializeField]
     private TMPro.TMP_Text sheepCounterUI;
+
     // Start is called before the first frame update
     void Start()
     {

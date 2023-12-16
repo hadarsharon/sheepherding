@@ -7,6 +7,9 @@ using Random = UnityEngine.Random;
 public class SheepBehavior : MonoBehaviour
 {
     [SerializeField]
+    float sheepSpeed;
+
+    [SerializeField]
     float grazeTimerMin = 3, grazeTimerMax = 7;
 
     [SerializeField]
@@ -33,6 +36,10 @@ public class SheepBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Give the sheep a random Y rotation value on start
+        float randomRotationY = Random.Range(0f, 360f);
+        transform.rotation = Quaternion.Euler(0f, randomRotationY, 0f);
+
         //Get Sheep RigidBody
         rigbod = GetComponent<Rigidbody>();
 
@@ -55,7 +62,7 @@ public class SheepBehavior : MonoBehaviour
                 //Move the sheep forward over a period of time
                 while (countDown > 0)
                 {
-                    rigbod.AddForce(transform.forward * 650 * Time.smoothDeltaTime, ForceMode.Acceleration);
+                    rigbod.AddForce(transform.forward * sheepSpeed * Time.smoothDeltaTime, ForceMode.Acceleration);
                     countDown -= Time.smoothDeltaTime;
                     yield return null;
                 }
@@ -104,8 +111,10 @@ public class SheepBehavior : MonoBehaviour
     public void RunAway()
     {
         float dogDistance = Vector3.Distance(dogBod.position, rigbod.position);
+        Debug.Log(dogDistance);
         if (dogDistance <= barkDistance)
         {
+            StopAllCoroutines();
             StartCoroutine(RunAwayCoroutine());
        }
     }
@@ -130,7 +139,7 @@ public class SheepBehavior : MonoBehaviour
         //Run Away
         while (countDown > 0)
         {
-            rigbod.AddForce(transform.forward * 650 * Time.smoothDeltaTime, ForceMode.Acceleration);
+            rigbod.AddForce(transform.forward * sheepSpeed * Time.smoothDeltaTime, ForceMode.Acceleration);
             countDown -= Time.smoothDeltaTime;
             yield return null;
         }
