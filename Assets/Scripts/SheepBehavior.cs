@@ -104,14 +104,20 @@ public class SheepBehavior : MonoBehaviour
                 break;
         }
         //Restart the Graze() Coroutine
-        StartCoroutine(Graze());
+        RestartGraze();
 
+    }
+
+    void RestartGraze()
+    {
+        StopAllCoroutines();
+        StartCoroutine(Graze());
     }
 
     public void RunAway()
     {
         float dogDistance = Vector3.Distance(dogBod.position, rigbod.position);
-        Debug.Log(dogDistance);
+        //Debug.Log(dogDistance);
         if (dogDistance <= barkDistance)
         {
             StopAllCoroutines();
@@ -121,7 +127,6 @@ public class SheepBehavior : MonoBehaviour
 
     IEnumerator RunAwayCoroutine()
     {
-        print("Run Away!");
         //Get the direction of the Dog in relation to the Sheep
         Vector3 direction = dogBod.position - rigbod.position;
         direction.Normalize();
@@ -146,7 +151,8 @@ public class SheepBehavior : MonoBehaviour
         rigbod.velocity = Vector3.zero;
         //Return to Grazing once obedience timer runs out
         yield return new WaitForSeconds(countDown);
-        Graze();
+        hasRunAway = true;
+        StartCoroutine(Graze());
 
 
         yield return null;

@@ -7,6 +7,10 @@ public class SheepZone : MonoBehaviour
 {
     private List<GameObject> sheepInPen;
 
+    private GameObject[] sheepArray;
+
+    private int sheepTotal;
+
     [SerializeField]
     private TMPro.TMP_Text sheepCounterUI;
 
@@ -14,12 +18,19 @@ public class SheepZone : MonoBehaviour
     void Start()
     {
         sheepInPen = new List<GameObject>();
+
+        sheepArray = GameObject.FindGameObjectsWithTag("Sheep");
+        sheepTotal = sheepArray.Length;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (sheepInPen.Count >= sheepTotal)
+        {
+            sheepCounterUI.text = "You Win!";
+        }
     }
 
     private void OnTriggerEnter(Collider other)
