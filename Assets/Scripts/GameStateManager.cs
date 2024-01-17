@@ -8,10 +8,9 @@ public class GameStateManager : MonoBehaviour
     public static GameStateManager GameStateManagerSingleton { get; private set; }
     public GameStates CurrentGameState => currentGameState;
 
-
-
     private GameStates currentGameState;
     
+    //should match scene IDs in Build Settings
     public enum GameStates
     {
         MainMenu = 0,
@@ -23,6 +22,7 @@ public class GameStateManager : MonoBehaviour
 
     private void Awake()
     {
+        //for the singleton
         if (GameStateManagerSingleton != null && GameStateManagerSingleton != this)
         {
             Destroy(this);
@@ -38,12 +38,6 @@ public class GameStateManager : MonoBehaviour
     void Start()
     {
         currentGameState = GameStates.MainMenu;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void ChangeGameState(GameStates newGameState)
