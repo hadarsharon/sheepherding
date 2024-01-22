@@ -69,12 +69,6 @@ public class DogMovement : MonoBehaviour
             isMoving = true;
         }
 
-        //Bark
-        if (Input.GetKey(KeyCode.Space))
-        {
-            
-        }
-
         // Stop the rigidbody from moving if no buttons are pressed
         if (!isMoving)
         {
@@ -107,28 +101,23 @@ public class DogMovement : MonoBehaviour
 
     void moveForward(float forwardSpeed)
     {
-        rigBod.AddForce(transform.forward * forwardSpeed, ForceMode.Acceleration);
+        rigBod.velocity = transform.forward * forwardSpeed;
     }
 
     void moveBackward(float backwardSpeed)
     {
-        rigBod.AddForce(-transform.forward * backwardSpeed, ForceMode.Acceleration);
+        rigBod.velocity = -transform.forward * backwardSpeed;
     }
 
     void strafeLeft(float strafeSpeed)
     {
         Vector3 left = new Vector3(-1, 0, 0);
-        rigBod.AddForce(left * strafeSpeed, ForceMode.Acceleration);
+        rigBod.velocity = left * strafeSpeed;
     }
 
     void strafeRight(float strafeSpeed)
     {
         Vector3 right = new Vector3(1, 0, 0);
-        rigBod.AddForce(right * strafeSpeed, ForceMode.Acceleration);
-    }
-
-    void bark()
-    {
-
+        rigBod.velocity = right * strafeSpeed;
     }
 }

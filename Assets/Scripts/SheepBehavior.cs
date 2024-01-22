@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class SheepBehavior : MonoBehaviour
 {
     [SerializeField]
+    float sheepSpeedMin, sheepSpeedMax;
     float sheepSpeed;
 
     [SerializeField]
@@ -62,7 +63,9 @@ public class SheepBehavior : MonoBehaviour
                 //Move the sheep forward over a period of time
                 while (countDown > 0)
                 {
-                    rigbod.AddForce(transform.forward * sheepSpeed * Time.smoothDeltaTime, ForceMode.Acceleration);
+                    //rigbod.AddForce(transform.forward * sheepSpeed * Time.smoothDeltaTime, ForceMode.Acceleration);
+                    sheepSpeed = Random.Range(sheepSpeedMin, sheepSpeedMax);
+                    rigbod.velocity = transform.forward * sheepSpeed;
                     countDown -= Time.smoothDeltaTime;
                     yield return null;
                 }
@@ -144,7 +147,9 @@ public class SheepBehavior : MonoBehaviour
         //Run Away
         while (countDown > 0)
         {
-            rigbod.AddForce(transform.forward * sheepSpeed * Time.smoothDeltaTime, ForceMode.Acceleration);
+            //rigbod.AddForce(transform.forward * sheepSpeed * Time.smoothDeltaTime, ForceMode.Acceleration);
+            sheepSpeed = Random.Range(sheepSpeedMin, sheepSpeedMax);
+            rigbod.velocity = transform.forward * sheepSpeed;
             countDown -= Time.smoothDeltaTime;
             yield return null;
         }

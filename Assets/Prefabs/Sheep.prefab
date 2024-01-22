@@ -62,7 +62,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0574f10cab187428e023d2f8ea943d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sheepSpeed: 650
+  sheepSpeedMin: 3
+  sheepSpeedMax: 10
   grazeTimerMin: 3
   grazeTimerMax: 7
   obedienceTimerMin: 3
