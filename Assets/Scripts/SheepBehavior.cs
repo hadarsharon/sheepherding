@@ -19,10 +19,11 @@ public class SheepBehavior : MonoBehaviour
     [SerializeField]
     float barkDistance;
 
-    bool hasRunAway = false;
+    //bool hasRunAway = false;
 
     Rigidbody rigbod;
     Rigidbody dogBod;
+
 
     private void OnEnable()
     {
@@ -49,6 +50,18 @@ public class SheepBehavior : MonoBehaviour
 
         //Start the Graze() Coroutine
         StartCoroutine(Graze());
+    }
+
+    void Update()
+    {
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, 5, transform.position, out hit, 10))
+        {
+            if (hit.collider.gameObject.tag == "Fence")
+            {
+                print(" hit fence");
+            }
+        }
     }
 
     IEnumerator Graze()
