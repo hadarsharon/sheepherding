@@ -24,6 +24,8 @@ public class SheepBehavior : MonoBehaviour
     Rigidbody rigbod;
     Rigidbody dogBod;
 
+    bool hasRunAway;
+
 
     private void OnEnable()
     {
