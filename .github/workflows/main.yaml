@@ -1,6 +1,6 @@
 name: Main Workflow
-on:
-  workflow_dispatch: {}
+on: [push, pull_request]
+
 jobs:
   activation:
     name: Request manual activation file 🔑
@@ -29,4 +29,3 @@ jobs:
         with:
           name: Build
           path: build
-          
