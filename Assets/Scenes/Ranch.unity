@@ -8154,7 +8154,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dog: {fileID: 1648013685}
-  YPosition: 8
+  minYPosition: 8
+  maxYPosition: 12
+  zoomSpeed: 1
+  minZoomSize: 5
+  maxZoomSize: 10
 --- !u!1001 &825242930
 PrefabInstance:
   m_ObjectHideFlags: 0

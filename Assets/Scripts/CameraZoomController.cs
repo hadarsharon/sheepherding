@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class CameraZoomController : MonoBehaviour
 {
-    [SerializeField]
-    public GameObject dog;
-    [SerializeField]
-    public float YPosition = 8f;
+    [SerializeField] private GameObject dog;
+    [SerializeField] private float minYPosition = 8f;
+    [SerializeField] private float maxYPosition = 12f;
+    [SerializeField] private float zoomSpeed = 1f;
+    [SerializeField] private float minZoomSize = 5f;
+    [SerializeField] private float maxZoomSize = 10f;
 
     private Vector3 offset;
 
@@ -17,11 +19,20 @@ public class CameraZoomController : MonoBehaviour
         offset = transform.position - dog.transform.position;
     }
 
-    // Update is called once per frame
+    // LateUpdate is called after Update each frame
     void LateUpdate()
     {
+        // Follow the dog
         transform.position = dog.transform.position - offset;
 
-        transform.position = new Vector3(transform.position.x, YPosition, transform.position.z);
+        // Ensure Y position stays within specified limits
+        float clampedYPosition = Mathf.Clamp(transform.position.y, minYPosition, maxYPosition);
+        transform.position = new Vector3(transform.position.x, clampedYPosition, transform.position.z);
+
+        // Zoom in/out based on mouse scroll wheel
+        float scrollData = Input.GetAxis("Mouse ScrollWheel");
+        float newSize = Camera.main.orthographicSize - scrollData * zoomSpeed;
+        newSize = Mathf.Clamp(newSize, minZoomSize, maxZoomSize);
+        Camera.main.orthographicSize = newSize;
     }
 }
