@@ -24,17 +24,5 @@ namespace Tests
             // Check if the scene loaded without errors
             Assert.IsTrue(scene.isLoaded, "Scene did not load properly.");
         }
-
-        // Additional tests can be added based on the functionality you want to test
-
-        // A UnityTest behaves like a coroutine in Play Mode.
-        // In Edit Mode, you can use `yield return null;` to skip a frame.
-        [UnityTest]
-        public IEnumerator FirstTestWithEnumeratorPasses()
-        {
-            // Use the Assert class to test conditions.
-            // Use yield to skip a frame.
-            yield return null;
-        }
     }
 }
