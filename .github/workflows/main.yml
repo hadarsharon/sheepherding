@@ -29,6 +29,15 @@ jobs:
           restore-keys: |
             Library-SheepGame-
             Library-
+      - name: Extract branch name
+        shell: bash
+        run: |
+          if [[ "${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" == "main" ]]; then
+            echo "branch=" >> $GITHUB_OUTPUT
+          else
+            echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+          fi
+        id: extract_branch
       - uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -47,4 +56,4 @@ jobs:
           role-to-assume: arn:aws:iam::954266951730:role/github
           role-session-name: github
       - name: Sync files with S3
-        run: aws s3 sync ./build/WebGL/WebGL/ s3://${{ env.S3_BUCKET_NAME }}
+        run: aws s3 sync ./build/WebGL/WebGL/ s3://${{ env.S3_BUCKET_NAME }}/${{ steps.extract_branch.outputs.branch }}
