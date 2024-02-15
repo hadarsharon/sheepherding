@@ -9,12 +9,23 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  S3_BUCKET_NAME: unitysheepgameonline-origin
+  AWS_REGION: us-east-1
+
 jobs:
   build:
     name: Build WebGL
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-SheepGame-${{ hashFiles('**/ProjectSettings/ProjectSettings.asset') }}
+          restore-keys: |
+            Library-SheepGame-
+            Library-
       - uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -26,3 +37,11 @@ jobs:
         with:
           name: Build
           path: build
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::954266951730:role/github
+          role-session-name: github
+      - name: Sync files with S3
+        run: aws s3 sync ./build/WebGL/WebGL/ s3://${{ env.S3_BUCKET_NAME }}
