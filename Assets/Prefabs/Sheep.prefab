@@ -69,6 +69,7 @@ MonoBehaviour:
   obedienceTimerMin: 3
   obedienceTimerMax: 7
   barkDistance: 10
+  minFenceDistance: 5
 --- !u!1 &4372892040195479298
 GameObject:
   m_ObjectHideFlags: 0
