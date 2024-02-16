@@ -169,7 +169,6 @@ public class SheepBehavior : MonoBehaviour
     public void RunAway()
     {
         float dogDistance = Vector3.Distance(dogBod.position, rigbod.position);
-        //Debug.Log(dogDistance);
         if (dogDistance <= barkDistance)
         {
             StopAllCoroutines();
@@ -188,7 +187,6 @@ public class SheepBehavior : MonoBehaviour
         //Get the direction of the Dog in relation to the Sheep
         Vector3 direction = dogBod.position - rigbod.position;
         direction.Normalize();
-        Debug.Log(direction);
         // Calculate the rotation to face the opposite direction
         Quaternion rotation = Quaternion.LookRotation(-direction);
         //Rotate the sheep over a period of time
