@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5252975747095805027}
   - component: {fileID: 4203396007374347230}
   - component: {fileID: 6226976027682557579}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 3228932043827260938}
   - component: {fileID: 3487997922559412306}
   - component: {fileID: 623890256632392835}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 2033310914955141351}
   - component: {fileID: 344472863549056591}
   - component: {fileID: 2892332753364134123}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
