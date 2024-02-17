@@ -5617,7 +5617,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -5632,7 +5632,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -10238,6 +10238,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f77b0eaf8e5044784828d952d049ad90, type: 3}
   volumeChangeMultiplier: 0.2
   pitchChangeMultiplier: 0.2
+  minWaitBetweenPlays: 5
+  maxWaitBetweenPlays: 10
+  waitTimeCountdown: -1
 --- !u!4 &1015625702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3008297296413678391, guid: cb422acdc199d6e42910f589b81c283b,

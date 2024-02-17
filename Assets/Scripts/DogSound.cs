@@ -20,12 +20,14 @@ public class DogSound : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
             DogBarkSound();
         }
     }
 
-    public void DogBarkSound() {
+    public void DogBarkSound() 
+    {
         source.clip = sounds[Random.Range(0, sounds.Length)];
         source.volume = Random.Range(0.5f - volumeChangeMultiplier, 0.5f);
         source.pitch = Random.Range(1 - pitchChangeMultiplier, 1 + pitchChangeMultiplier);
