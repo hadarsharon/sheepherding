@@ -1649,8 +1649,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125043314}
   m_LocalRotation: {x: 0.22529197, y: -0.7662664, z: 0.35568896, w: 0.48535007}
-  m_LocalPosition: {x: 0.63000107, y: 3, z: 0.20000005}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.63000107, y: 25, z: 16.9}
+  m_LocalScale: {x: 0.84467, y: 1, z: -0.96978}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -8205,8 +8205,9 @@ GameObject:
   - component: {fileID: 807946292}
   - component: {fileID: 807946294}
   - component: {fileID: 807946293}
+  - component: {fileID: 807946295}
   m_Layer: 0
-  m_Name: Camera1
+  m_Name: DogCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8220,7 +8221,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807946291}
   m_LocalRotation: {x: 0.0000019818544, y: 0.70710796, z: -0.7071057, w: 0.0000021457672}
-  m_LocalPosition: {x: 0, y: 90.36, z: 33.02}
+  m_LocalPosition: {x: -1.2, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1658415846}
@@ -8258,10 +8259,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 50
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 11.610734
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8277,6 +8278,24 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &807946295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807946291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 737fd36cc0bf5a04c8ff4103136617f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dog: {fileID: 1648013685}
+  minYPosition: 8
+  maxYPosition: 12
+  zoomSpeed: 1
+  minZoomSize: 5
+  maxZoomSize: 10
 --- !u!1001 &825242930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14728,6 +14747,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bae468b3a6b9ea141967f3cfbe601352, type: 3}
+--- !u!1 &1648013685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3227742170095886321, guid: 2c380735d059b144fbdde4d43abc64af,
+    type: 3}
+  m_PrefabInstance: {fileID: 1335022778}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1658415845
 GameObject:
   m_ObjectHideFlags: 0
