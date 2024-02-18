@@ -16,10 +16,9 @@ public class GameStateManager : MonoBehaviour
     public enum GameStates
     {
         MainMenu = 0,
-        LevelSelect = 1,
-        ScoreBoard = 2,
-        Level1 = 3,
-        Level2 = 4
+        ScoreBoard = 1,
+        Level1 = 2,
+        Level2 = 3
     }
 
     private void Awake()
@@ -57,7 +56,7 @@ public class GameStateManager : MonoBehaviour
 
             currentGameState = newGameState;
 
-            if((int)currentGameState > 2) //state is a game level, set up required
+            if((int)currentGameState > 1) //state is a game level, set up required
             {
                 SetUpGameLevel();
             }

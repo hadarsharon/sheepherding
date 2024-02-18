@@ -67,6 +67,8 @@
     <Compile Include="Assets\Scripts\DogMovement.cs" />
     <Compile Include="Assets\Scripts\EventManager.cs" />
     <Compile Include="Assets\Scripts\GameStateManager.cs" />
+    <Compile Include="Assets\Scripts\MainMenuUI.cs" />
+    <Compile Include="Assets\Scripts\PauseMenuUI.cs" />
     <Compile Include="Assets\Scripts\SheepBehavior.cs" />
     <Compile Include="Assets\Scripts\SheepZone.cs" />
     <Compile Include="Assets\Scripts\TestChangeScene.cs" />
