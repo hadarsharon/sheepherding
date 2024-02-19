@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -7,6 +8,7 @@ using Random = UnityEngine.Random;
 public class SheepBehavior : MonoBehaviour
 {
     [SerializeField]
+    float sheepSpeedMin, sheepSpeedMax;
     float sheepSpeed;
 
     [SerializeField]
@@ -18,10 +20,27 @@ public class SheepBehavior : MonoBehaviour
     [SerializeField]
     float barkDistance;
 
+    [SerializeField]
+    float minFenceDistance = 5f;
+
+    float fenceDistance = float.MaxValue;
+
     bool hasRunAway = false;
+    bool nearFence = false;
 
     Rigidbody rigbod;
     Rigidbody dogBod;
+
+    GameObject[] Fences;
+    GameObject closestFence;
+
+    GameObject centerStage;
+
+    float distance;
+
+    private Vector3 gizmoSpherePosition;
+    private bool drawGizmo = false;
+
 
     private void OnEnable()
     {
@@ -48,6 +67,37 @@ public class SheepBehavior : MonoBehaviour
 
         //Start the Graze() Coroutine
         StartCoroutine(Graze());
+
+        Fences = GameObject.FindGameObjectsWithTag("Fence");
+
+        centerStage = GameObject.Find("CenterStage");
+
+        gizmoSpherePosition = transform.position;
+        drawGizmo = true;
+    }
+
+    void Update()
+    {
+        if (Fences != null && nearFence == false)
+        {
+
+            //Check to see how close the Fences are
+            foreach (GameObject f in Fences)
+            {
+                distance = Vector3.Distance(transform.position, f.transform.position);
+                if (distance <= fenceDistance)
+                {
+                    fenceDistance = distance;
+                    closestFence = f;
+                }
+                if (Vector3.Distance(transform.position, closestFence.transform.position) < minFenceDistance)
+                {
+                    nearFence = true;
+                    MoveFromFence(closestFence);
+
+                }
+            }
+        }
     }
 
     IEnumerator Graze()
@@ -62,7 +112,9 @@ public class SheepBehavior : MonoBehaviour
                 //Move the sheep forward over a period of time
                 while (countDown > 0)
                 {
-                    rigbod.AddForce(transform.forward * sheepSpeed * Time.smoothDeltaTime, ForceMode.Acceleration);
+                    //rigbod.AddForce(transform.forward * sheepSpeed * Time.smoothDeltaTime, ForceMode.Acceleration);
+                    sheepSpeed = Random.Range(sheepSpeedMin, sheepSpeedMax);
+                    rigbod.velocity = transform.forward * sheepSpeed;
                     countDown -= Time.smoothDeltaTime;
                     yield return null;
                 }
@@ -117,12 +169,17 @@ public class SheepBehavior : MonoBehaviour
     public void RunAway()
     {
         float dogDistance = Vector3.Distance(dogBod.position, rigbod.position);
-        //Debug.Log(dogDistance);
         if (dogDistance <= barkDistance)
         {
             StopAllCoroutines();
             StartCoroutine(RunAwayCoroutine());
-       }
+        }
+    }
+
+    void MoveFromFence(GameObject fence)
+    {
+        StopAllCoroutines();
+        StartCoroutine(MoveFromFenceCoroutine(fence));
     }
 
     IEnumerator RunAwayCoroutine()
@@ -138,13 +195,14 @@ public class SheepBehavior : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 180f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f); // Adjust speed here as well
         }
-
         //Set countDown timer
         float countDown = Random.Range(obedienceTimerMin, obedienceTimerMax);
         //Run Away
         while (countDown > 0)
         {
-            rigbod.AddForce(transform.forward * sheepSpeed * Time.smoothDeltaTime, ForceMode.Acceleration);
+            //rigbod.AddForce(transform.forward * sheepSpeed * Time.smoothDeltaTime, ForceMode.Acceleration);
+            sheepSpeed = Random.Range(sheepSpeedMin, sheepSpeedMax);
+            rigbod.velocity = transform.forward * sheepSpeed;
             countDown -= Time.smoothDeltaTime;
             yield return null;
         }
@@ -152,9 +210,54 @@ public class SheepBehavior : MonoBehaviour
         //Return to Grazing once obedience timer runs out
         yield return new WaitForSeconds(countDown);
         hasRunAway = true;
-        StartCoroutine(Graze());
+        RestartGraze();
 
 
         yield return null;
     }
+
+    IEnumerator MoveFromFenceCoroutine(GameObject fence)
+    {
+        //Set the sheep velocity to zero
+        rigbod.velocity = Vector3.zero;
+
+        //pause for a second
+        yield return new WaitForSeconds(1.0f);
+
+        //Get the direction of the Fence in relation to the sheep
+        Vector3 direction = fence.transform.position - rigbod.position;
+        direction.Normalize();
+        direction = new Vector3(direction.x, 0f, direction.z);
+
+        //Calculate the rotation to face the opposite direction
+        Quaternion rotation = Quaternion.LookRotation(-direction);
+
+        //Rotate the sheep over a period of time
+        while (Quaternion.Angle(transform.rotation, rotation) > 0.1f)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 180f * Time.deltaTime);
+            yield return new WaitForSeconds(0.02f); // Adjust speed here as well
+        }
+
+
+        //Set countDown timer
+        float countDown = Random.Range(obedienceTimerMin, obedienceTimerMax);
+
+        //Move away
+        while (countDown > 0)
+        {
+            sheepSpeed = Random.Range(sheepSpeedMin, sheepSpeedMax);
+            rigbod.velocity = transform.forward * sheepSpeed;
+            countDown -= Time.smoothDeltaTime;
+            yield return null;
+        }
+        nearFence = false;
+
+        //Return to Grazing
+        RestartGraze();
+
+        yield return null;
+    }
+
+
 }

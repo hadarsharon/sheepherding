@@ -8,21 +8,37 @@ public class DogMovement : MonoBehaviour
     [SerializeField]
     float forwardSpeed;
 
-    [SerializeField]
-    float backwardSpeed;
+    //[SerializeField]
+    //float backwardSpeed;
+
+    //[SerializeField]
+    //float strafeSpeed;
 
     [SerializeField]
-    float strafeSpeed;
+    float sprintMultiplier = 2f;
 
     Rigidbody rigBod;
 
     bool isMoving = false;
+
+    [SerializeField]
+    float sprintTime = 5f;
+
+    float sprintTimer;
+
+    [SerializeField]
+    float sprintCooldownTime = 15f;
+
+    float sprintCooldownTimer;
 
 
     // Start is called before the first frame update
     void Start()
     {
         rigBod = GetComponent<Rigidbody>();
+
+        sprintTimer = sprintTime;
+        sprintCooldownTimer = sprintCooldownTime;
     }
 
     // Update is called once per frame
@@ -31,7 +47,7 @@ public class DogMovement : MonoBehaviour
         followCursor();
 
         //Check to see if the Dog should be moving
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.W))
         {
             rigBod.velocity = Vector3.zero;
         }
@@ -47,33 +63,44 @@ public class DogMovement : MonoBehaviour
             moveForward(forwardSpeed);
             isMoving = true;
         }
-
-        //Move Backward
-        if (Input.GetKey(KeyCode.S))
+        //Sprint
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift) && sprintTimer > 0f)
         {
-            moveBackward(backwardSpeed);
-            isMoving = true;
+            sprint(forwardSpeed);
+            sprintTimer -= Time.deltaTime;
         }
 
-        //Strafe Left
-        if (Input.GetKey(KeyCode.A))
+        if (!Input.GetKey(KeyCode.LeftShift) && sprintTimer < sprintTime)
         {
-            strafeLeft(strafeSpeed);
-            isMoving = true;
+            sprintCooldownTimer -= Time.deltaTime;
         }
 
-        //Strafe Right
-        if (Input.GetKey(KeyCode.D))
+        if (sprintCooldownTimer <= 0f)
         {
-            strafeRight(strafeSpeed);
-            isMoving = true;
+            sprintTimer = sprintTime;
+            sprintCooldownTimer = sprintCooldownTime;
         }
 
-        //Bark
-        if (Input.GetKey(KeyCode.Space))
-        {
-            
-        }
+        ////Move Backward
+        //if (Input.GetKey(KeyCode.S))
+        //{
+        //    moveBackward(backwardSpeed);
+        //    isMoving = true;
+        //}
+
+        ////Strafe Left
+        //if (Input.GetKey(KeyCode.A))
+        //{
+        //    strafeLeft(strafeSpeed);
+        //    isMoving = true;
+        //}
+
+        ////Strafe Right
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    strafeRight(strafeSpeed);
+        //    isMoving = true;
+        //}
 
         // Stop the rigidbody from moving if no buttons are pressed
         if (!isMoving)
@@ -107,28 +134,28 @@ public class DogMovement : MonoBehaviour
 
     void moveForward(float forwardSpeed)
     {
-        rigBod.AddForce(transform.forward * forwardSpeed, ForceMode.Acceleration);
+        rigBod.velocity = transform.forward * forwardSpeed;
     }
 
     void moveBackward(float backwardSpeed)
     {
-        rigBod.AddForce(-transform.forward * backwardSpeed, ForceMode.Acceleration);
+        rigBod.velocity = -transform.forward * backwardSpeed;
     }
 
     void strafeLeft(float strafeSpeed)
     {
         Vector3 left = new Vector3(-1, 0, 0);
-        rigBod.AddForce(left * strafeSpeed, ForceMode.Acceleration);
+        rigBod.velocity = left * strafeSpeed;
     }
 
     void strafeRight(float strafeSpeed)
     {
         Vector3 right = new Vector3(1, 0, 0);
-        rigBod.AddForce(right * strafeSpeed, ForceMode.Acceleration);
+        rigBod.velocity = right * strafeSpeed;
     }
 
-    void bark()
+    void sprint(float forwardSpeed)
     {
-
+        rigBod.velocity = transform.forward * forwardSpeed * sprintMultiplier;
     }
 }
