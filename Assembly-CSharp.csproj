@@ -55,6 +55,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Easy Primitive Animals\FarmEdition\Scripts\AnimalController.cs" />
+     <Compile Include="Assets\Easy Primitive Animals\FarmEdition\Scripts\RotateStand.cs" />
      <Compile Include="Assets\Scripts\CameraZoomController.cs" />
      <Compile Include="Assets\Scripts\DogMovement.cs" />
      <Compile Include="Assets\Scripts\DogSound.cs" />
@@ -62,6 +64,7 @@
      <Compile Include="Assets\Scripts\SheepBehavior.cs" />
      <Compile Include="Assets\Scripts\SheepSoundRandomizer.cs" />
      <Compile Include="Assets\Scripts\SheepZone.cs" />
+     <Compile Include="Assets\VoxelAnimals\Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Zoe\Scripts\sheepMovement.cs" />
      <Compile Include="Assets\Zoe\Scripts\sheepPhysicsMovement.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
@@ -85,6 +88,7 @@
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+     <None Include="Assets\VoxelAnimals\Documentation\ReadMe.txt" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
