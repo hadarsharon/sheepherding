@@ -8689,10 +8689,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 50
+  far clip plane: 60
   field of view: 60
   orthographic: 1
-  orthographic size: 11.610734
+  orthographic size: 17
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8725,7 +8725,7 @@ MonoBehaviour:
   maxYPosition: 12
   zoomSpeed: 1
   minZoomSize: 5
-  maxZoomSize: 10
+  maxZoomSize: 17
 --- !u!1001 &825242930
 PrefabInstance:
   m_ObjectHideFlags: 0
