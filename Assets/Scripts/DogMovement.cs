@@ -31,6 +31,10 @@ public class DogMovement : MonoBehaviour
 
     float sprintCooldownTimer;
 
+    Vector3 DownwardForce = new Vector3(0, -10, 0);
+
+    bool isGrounded;
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +55,8 @@ public class DogMovement : MonoBehaviour
         {
             rigBod.velocity = Vector3.zero;
         }
+
+        isGrounded = GroundCheck();
 
     }
 
@@ -107,6 +113,11 @@ public class DogMovement : MonoBehaviour
         {
             rigBod.velocity = Vector3.zero;
         }
+        if (!isGrounded)
+        {
+            
+        }
+
     }
 
     /** Make Dag follow the player's cursor*/
@@ -157,5 +168,17 @@ public class DogMovement : MonoBehaviour
     void sprint(float forwardSpeed)
     {
         rigBod.velocity = transform.forward * forwardSpeed * sprintMultiplier;
+    }
+
+    bool GroundCheck()
+    {
+        RaycastHit hit;
+        float rayLength = 0.1f;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength))
+        {
+            return true;
+        }
+        return false;
     }
 }
