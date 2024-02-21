@@ -12,6 +12,7 @@ public class EventManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Debug.Log("Bark");
             OnBark?.Invoke();
         }
     }
