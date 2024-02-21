@@ -8724,7 +8724,7 @@ MonoBehaviour:
   minYPosition: 8
   maxYPosition: 12
   zoomSpeed: 1
-  minZoomSize: 5
+  minZoomSize: 2
   maxZoomSize: 10
 --- !u!1001 &825242930
 PrefabInstance:
