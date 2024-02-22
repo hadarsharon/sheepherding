@@ -63,8 +63,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: 15
-  backwardSpeed: 15
-  strafeSpeed: 15
+  sprintMultiplier: 2
+  sprintTime: 5
+  sprintCooldownTime: 15
+  rayLength: 0.1
 --- !u!1 &4372892040195479298
 GameObject:
   m_ObjectHideFlags: 0
