@@ -54,6 +54,6 @@ public class SheepZone : MonoBehaviour
 
     private void UpdateSheepCounter()
     {
-        sheepCounterUI.text = "Sheep Counter: " + sheepInPen.Count;
+        sheepCounterUI.text = "Sheep Count: " + sheepInPen.Count;
     }
 }
