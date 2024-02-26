@@ -27,8 +27,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.38, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.48, z: 0.09}
+  m_Size: {x: 0.38, y: 0.78, z: 1}
+  m_Center: {x: 0, y: 0.39, z: 0.09}
 --- !u!114 &6011709367204061031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   sprintMultiplier: 2
   sprintTime: 5
   sprintCooldownTime: 15
-  rayLength: 0.25
+  rayLength: 0.4
 --- !u!1001 &2200162731836480518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61,12 +61,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1299dfd772c05bf4eb2437d163771001,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.026
+      value: 0.018
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1299dfd772c05bf4eb2437d163771001,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.8270035
+      value: 0.7157
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1299dfd772c05bf4eb2437d163771001,
         type: 3}
@@ -111,17 +111,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1299dfd772c05bf4eb2437d163771001,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1299dfd772c05bf4eb2437d163771001,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1299dfd772c05bf4eb2437d163771001,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1299dfd772c05bf4eb2437d163771001,
         type: 3}
