@@ -23,6 +23,9 @@ public class SheepBehavior : MonoBehaviour
     [SerializeField]
     float minFenceDistance;
 
+    [SerializeField]
+    float rayLength = 1f;
+
     float fenceDistance = float.MaxValue;
 
     bool hasRunAway = false;
@@ -35,10 +38,7 @@ public class SheepBehavior : MonoBehaviour
     GameObject[] Fences;
     GameObject closestFence;
 
-    GameObject centerStage;
-
     float distance;
-    float rayLength = 1f;
 
     private Vector3 gizmoSpherePosition;
     private bool drawGizmo = false;
@@ -71,8 +71,6 @@ public class SheepBehavior : MonoBehaviour
         StartCoroutine(Graze());
 
         Fences = GameObject.FindGameObjectsWithTag("Fence");
-
-        centerStage = GameObject.Find("CenterStage");
 
         gizmoSpherePosition = transform.position;
         drawGizmo = true;
