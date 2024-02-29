@@ -31,6 +31,7 @@ public class SheepBehavior : MonoBehaviour
     bool hasRunAway = false;
     bool nearFence = false;
     bool isGrounded;
+    bool isInPen = false;
 
     Rigidbody rigBod;
     Rigidbody dogBod;
@@ -99,6 +100,18 @@ public class SheepBehavior : MonoBehaviour
             }
         }
         isGrounded = GroundCheck();
+
+        if (gameObject.tag == "SheepInPen" && isInPen == false)
+        {
+            FindObjectOfType<EventManager>().OnBark -= RunAway;
+            isInPen = true;
+        }
+        if (gameObject.tag == "Sheep" && isInPen == true)
+        { 
+            FindObjectOfType<EventManager>().OnBark += RunAway;
+            isInPen = false;
+        }
+        
     }
 
     void FixedUpdate()
@@ -203,7 +216,7 @@ public class SheepBehavior : MonoBehaviour
         //Rotate the sheep over a period of time
         while (Quaternion.Angle(transform.rotation, rotation) > 0.1f)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 180f * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 180f * Time.deltaTime * 1.5f);
             yield return new WaitForSeconds(0.02f); // Adjust speed here as well
         }
         //Set countDown timer
@@ -281,4 +294,5 @@ public class SheepBehavior : MonoBehaviour
         Debug.Log(transform.position.y);
         return false;
     }
+
 }
