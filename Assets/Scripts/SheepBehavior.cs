@@ -278,7 +278,7 @@ public class SheepBehavior : MonoBehaviour
         {
             return true;
         }
-        Debug.Log(transform.position.y);
+       // Debug.Log(transform.position.y);
         return false;
     }
 

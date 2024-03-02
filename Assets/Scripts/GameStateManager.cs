@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +9,8 @@ public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager GameStateManagerSingleton { get; private set; }
     public GameStates CurrentGameState => currentGameState;
+
+    public List<string> scores;
 
     private GameStates currentGameState;
 
@@ -46,6 +50,9 @@ public class GameStateManager : MonoBehaviour
         LevelData levelData1 = new LevelData(10, 3, 10, 3, 7, 3, 7, 10, 5);
         levelDatas.Add(levelData1);
 
+        //store scores
+        scores = new List<string>();
+        LoadScoresFromFile();
     }
 
     public void ChangeGameState(GameStates newGameState)
@@ -75,7 +82,6 @@ public class GameStateManager : MonoBehaviour
 
     private void SetUpGameLevel()
     {
-        
         //add sheep to scene and set their speed values
         if (currentGameState == GameStates.Level2)
         {
@@ -97,6 +103,36 @@ public class GameStateManager : MonoBehaviour
             }
         }
     }
+
+    public void SaveScore(string player, float score)
+    {
+        string scoreVal = player + "," + score.ToString();
+        scores.Add(scoreVal);
+        WriteScoreToFile(scoreVal);
+    }
+
+    private void LoadScoresFromFile()
+    {
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Shepherd's Paws", "scores.txt");
+        if (File.Exists(path))
+        {
+           // Debug.Log("scores file does exist at: " + path);
+            foreach(string line in File.ReadLines(path))
+            {
+                scores.Add(line);
+                //Debug.Log(line);
+            }
+        }
+    }
+    public static void WriteScoreToFile(string newScore)
+    {
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Shepherd's Paws", "scores.txt");
+
+        StreamWriter writer = new StreamWriter(path, true);
+        writer.WriteLine(newScore);
+        writer.Close();
+    }
+
     ///////Level Data///////
     public class LevelData
     {
