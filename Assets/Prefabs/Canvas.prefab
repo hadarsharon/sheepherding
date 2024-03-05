@@ -1092,6 +1092,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TMP_SheepCounter
       objectReference: {fileID: 0}
+    - target: {fileID: 1374212267288465415, guid: 393f2d73ff5e01d478c21acdb726eab0,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 393f2d73ff5e01d478c21acdb726eab0, type: 3}
 --- !u!224 &2600150003147958358 stripped

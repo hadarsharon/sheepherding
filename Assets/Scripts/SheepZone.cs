@@ -39,15 +39,18 @@ public class SheepZone : MonoBehaviour
         {
             sheepInPen.Add(other.transform.gameObject);
             UpdateSheepCounter();
+            other.transform.gameObject.tag = "SheepInPen";
+
         }
         
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.CompareTag("Sheep") && sheepInPen.Contains(other.transform.gameObject))
+        if (other.transform.CompareTag("SheepInPen") && sheepInPen.Contains(other.transform.gameObject))
         {
             sheepInPen.Remove(other.transform.gameObject);
             UpdateSheepCounter();
+            other.transform.gameObject.tag = "Sheep";
         }
         
     }
