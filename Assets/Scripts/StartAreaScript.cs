@@ -7,30 +7,21 @@ public class StartAreaScript : MonoBehaviour
     [SerializeField]
     GameObject sheepPrefab;
 
-    GameStateManager.LevelData thisLevelData;
-
     Transform spawnArea;
     float area_x;
     float area_z;
 
     void Start()
     {
-        Debug.Log("StartArea: Start()");
-
         spawnArea = transform;
         area_x = spawnArea.GetComponent<MeshRenderer>().bounds.size.x;
         area_z = spawnArea.GetComponent<MeshRenderer>().bounds.size.z;
-
-
     }
 
     public void SpawnSheep(GameStateManager.LevelData levelData)
     {
-        Debug.Log("spawn sheep start");
-
         int numOfSheep = levelData.noOfSheep;
 
-        
         //corner of spawn point
         float cornerPoint_x = spawnArea.position.x - area_x/2;
         float cornerPoint_z = spawnArea.position.z - area_z/2;
@@ -44,7 +35,7 @@ public class StartAreaScript : MonoBehaviour
             for (int j = 0; j < div; j++)
             {
                 //instantiate sheep as child of spawn area
-                GameObject obj = Instantiate(sheepPrefab, Vector3.zero, Quaternion.identity, spawnArea) as GameObject;
+                GameObject obj = Instantiate(sheepPrefab, Vector3.zero, Quaternion.identity, sheepPrefab.transform) as GameObject;
 
                 SheepBehavior sheepBehaviour = obj.GetComponent<SheepBehavior>();
                 sheepBehaviour.InjectSheepParameters(levelData);
@@ -70,8 +61,5 @@ public class StartAreaScript : MonoBehaviour
                 break;
             }
         }
-
-
-
     }
 }
