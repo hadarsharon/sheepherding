@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial.unity
     guid: 8e99899c3ae1ec34ca28f240dd62358a
   - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 49804d3ded82c894ca0ac2c73803f014
+  - enabled: 0
     path: Assets/Scenes/Ranch.unity
     guid: ea0151570d4b67b4da7b51adcb928c9e
   m_configObjects: {}

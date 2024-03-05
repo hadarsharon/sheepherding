@@ -12,7 +12,7 @@ public class SheepBehavior : MonoBehaviour
     float sheepSpeed;
 
     [SerializeField]
-    float grazeTimerMin = 3, grazeTimerMax = 7;
+    float grazeTimerMin, grazeTimerMax;
 
     [SerializeField]
     float obedienceTimerMin, obedienceTimerMax;
@@ -295,6 +295,8 @@ public class SheepBehavior : MonoBehaviour
         return false;
     }
 
+<<<<<<< HEAD
+=======
     public void InjectSheepParameters(GameStateManager.LevelData levelData)
     {
         sheepSpeedMin = levelData.sheepSpeedMin;
@@ -306,5 +308,5 @@ public class SheepBehavior : MonoBehaviour
         barkDistance = levelData.barkDistance;
         minFenceDistance = levelData.minFenceDistance;
     }
-
+>>>>>>> main
 }
