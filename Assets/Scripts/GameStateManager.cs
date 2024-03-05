@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +9,8 @@ public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager GameStateManagerSingleton { get; private set; }
     public GameStates CurrentGameState => currentGameState;
+
+    public List<string> scores;
 
     private GameStates currentGameState;
 
@@ -43,49 +47,117 @@ public class GameStateManager : MonoBehaviour
 
         //load up data for levels
         levelDatas = new List<LevelData>();
-        LevelData levelData1 = new LevelData(5, 10, 0);
+        LevelData levelData1 = new LevelData(10, 3, 10, 3, 7, 3, 7, 10, 5);
         levelDatas.Add(levelData1);
 
+        //store scores
+        scores = new List<string>();
+        LoadScoresFromFile();
     }
 
     public void ChangeGameState(GameStates newGameState)
     {
         if(newGameState != currentGameState)
         {
-            MoveScene((int)newGameState);
-
-            currentGameState = newGameState;
-
-            if((int)currentGameState > 1) //state is a game level, set up required
-            {
-                SetUpGameLevel();
-            }
+            StartCoroutine(MoveScene(newGameState));
         }
     }
     
-    private void MoveScene(int sceneId)
+    IEnumerator MoveScene(GameStates newGameState)
     {
-        SceneManager.LoadScene(sceneId);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync((int)newGameState);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        currentGameState = newGameState;
+
+        if ((int)currentGameState > 1) //state is a game level, set up required
+        {
+            //need to wait frame for objects to be loaded before game can be set up
+            yield return new WaitForEndOfFrame();
+            SetUpGameLevel();
+        }
     }
 
     private void SetUpGameLevel()
     {
         //add sheep to scene and set their speed values
-        
+        if (currentGameState == GameStates.Level2)
+        {
+            GameObject startZoneObj = GameObject.Find("StartArea");
+            if (startZoneObj is null)
+            {
+                Debug.Log("GameStateManager:SetUpGameLevel - Error: No StartArea object in scene");
+                return;
+            }
+            StartAreaScript startZone = startZoneObj.GetComponent<StartAreaScript>();
+            if(startZone is null)
+            {
+                Debug.Log("GameStateManager:SetUpGameLevel - Error: No StartAreaScript attached to StartAreaObject");
+                return;
+            }
+            else
+            {
+                startZone.SpawnSheep(levelDatas[0]);
+            }
+        }
     }
+
+    public void SaveScore(string player, float score)
+    {
+        string scoreVal = player + "," + score.ToString();
+        scores.Add(scoreVal);
+        WriteScoreToFile(scoreVal);
+    }
+
+    private void LoadScoresFromFile()
+    {
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Shepherd's Paws", "scores.txt");
+        if (File.Exists(path))
+        {
+           // Debug.Log("scores file does exist at: " + path);
+            foreach(string line in File.ReadLines(path))
+            {
+                scores.Add(line);
+                //Debug.Log(line);
+            }
+        }
+    }
+    public static void WriteScoreToFile(string newScore)
+    {
+        string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Shepherd's Paws", "scores.txt");
+
+        StreamWriter writer = new StreamWriter(path, true);
+        writer.WriteLine(newScore);
+        writer.Close();
+    }
+
     ///////Level Data///////
     public class LevelData
     {
         public int noOfSheep;
-        public float sheepSpeedBase;
-        public float sheepSpeedRange;
+        public float sheepSpeedMin;
+        public float sheepSpeedMax;
+        public float grazeTimerMin;
+        public float grazeTimerMax;
+        public float obedienceTimerMin;
+        public float obedienceTimerMax;
+        public float barkDistance;
+        public float minFenceDistance;
 
-        public LevelData(int noOfSheep, float sheepSpeedBase, float sheepSpeedRange)
+        public LevelData(int noOfSheep, float sheepSpeedMin, float sheepSpeedMax, float grazeTimerMin, float grazeTimerMax, 
+            float obedienceTimerMin, float obedienceTimerMax, float barkDistance, float minFenceDistance)
         {
             this.noOfSheep = noOfSheep;
-            this.sheepSpeedBase = sheepSpeedBase;
-            this.sheepSpeedRange = sheepSpeedRange;
+            this.sheepSpeedMin = sheepSpeedMin;
+            this.sheepSpeedMax = sheepSpeedMax;
+            this.grazeTimerMin = grazeTimerMin;
+            this.grazeTimerMax = grazeTimerMax;
+            this.obedienceTimerMin = obedienceTimerMin;
+            this.obedienceTimerMax = obedienceTimerMax;
+            this.barkDistance = barkDistance;
+            this.minFenceDistance = minFenceDistance;
         }
     }
-    
 }
