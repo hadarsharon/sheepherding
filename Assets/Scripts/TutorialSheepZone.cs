@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//area sheep need to be herded into to complete game
-public class SheepZone : MonoBehaviour
+public class TutorialSheepZone : MonoBehaviour
 {
     private List<GameObject> sheepInPen;
-
-    private GameObject[] sheepArray;
-
-    private int sheepTotal => GameObject.FindGameObjectsWithTag("Sheep").Length;
 
     [SerializeField]
     private TMPro.TMP_Text sheepCounterUI;
@@ -18,49 +13,36 @@ public class SheepZone : MonoBehaviour
     private TMPro.TMP_Text sheepRemaining;
 
     [SerializeField]
-    private GameObject SaveScoreMenu;
+    private GameObject endTutorialScreen;
 
-    [SerializeField]
-    private Timer timer;
 
     // Start is called before the first frame update
     void Start()
     {
         sheepInPen = new List<GameObject>();
-
-        //sheepArray = GameObject.FindGameObjectsWithTag("Sheep");
-
-        //sheepTotal = Gam;
-
-
-        //for testing:
-        //GoToSaveScore();
-        
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdateSheepCounter();
-        if (sheepInPen.Count >= sheepTotal)
+        if (sheepInPen.Count == 1)
         {
             sheepCounterUI.text = "You Win!";
-            float finalScore = timer.TimePassed;
-            timer.StopTime();
-            GoToSaveScore(finalScore);
+            endTutorialScreen.SetActive(true);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.CompareTag("Sheep") && !sheepInPen.Contains(other.transform.gameObject))
+        if (other.transform.CompareTag("Sheep") && !sheepInPen.Contains(other.transform.gameObject))
         {
             sheepInPen.Add(other.transform.gameObject);
             UpdateSheepCounter();
             other.transform.gameObject.tag = "SheepInPen";
 
         }
-        
+
     }
     private void OnTriggerExit(Collider other)
     {
@@ -70,27 +52,32 @@ public class SheepZone : MonoBehaviour
             UpdateSheepCounter();
             other.transform.gameObject.tag = "Sheep";
         }
-        
+
     }
 
     private void UpdateSheepCounter()
     {
         sheepCounterUI.text = "Sheep Count: " + sheepInPen.Count;
-        if(sheepRemaining is null)
+        if (sheepRemaining is null)
         {
             Debug.Log("sheep remaining is null");
         }
-        sheepRemaining.text = "Sheep remaining: " + (sheepTotal - sheepInPen.Count).ToString();
+        int sheepLeft = 1;
+        if(sheepInPen.Count == 1)
+        {
+            sheepLeft = 0;
+        }
+        sheepRemaining.text = "Sheep remaining: " + sheepLeft.ToString();
     }
 
     private void GoToSaveScore(float score)
     {
-        SaveScoreUI saveScoreUI = SaveScoreMenu.GetComponent<SaveScoreUI>();
-        if(saveScoreUI is null)
+        /*SaveScoreUI saveScoreUI = SaveScoreMenu.GetComponent<SaveScoreUI>();
+        if (saveScoreUI is null)
         {
             Debug.Log("SheepZone:GoToSaveScore(): SaveScoreUI is null");
             return;
         }
-        saveScoreUI.Display(score);
+        saveScoreUI.Display(score);*/
     }
 }
