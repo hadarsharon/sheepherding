@@ -12,12 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ScoreBoard.unity
     guid: b2182ec1b66a07146a1f0cb5858670b8
   - enabled: 1
-    path: Assets/Scenes/Tutorial.unity
-    guid: 8e99899c3ae1ec34ca28f240dd62358a
+    path: Assets/Scenes/TutorialLevel.unity
+    guid: 6135b6bc908e6cc4eae00a607439662a
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 49804d3ded82c894ca0ac2c73803f014
-  - enabled: 0
-    path: Assets/Scenes/Ranch.unity
-    guid: ea0151570d4b67b4da7b51adcb928c9e
   m_configObjects: {}
