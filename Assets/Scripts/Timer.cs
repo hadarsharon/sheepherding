@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
 
     void DisplayTime()
     {
-        timerText.text = "Time: " + timePassed.ToString();
+        timerText.text = "Time: " + timePassed.ToString("0.00");
     }
 
     public void StopTime()
