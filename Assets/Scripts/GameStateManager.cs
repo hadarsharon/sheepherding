@@ -47,7 +47,7 @@ public class GameStateManager : MonoBehaviour
 
         //load up data for levels
         levelDatas = new List<LevelData>();
-        LevelData levelData1 = new LevelData(10, 3, 10, 3, 7, 3, 7, 10, 5);
+        LevelData levelData1 = new LevelData(4, 3, 10, 3, 7, 3, 7, 10, 5);
         levelDatas.Add(levelData1);
 
         //store scores
