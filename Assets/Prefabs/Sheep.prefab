@@ -2818,14 +2818,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0574f10cab187428e023d2f8ea943d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sheepSpeedMin: 3
+  sheepSpeedMin: 4
   sheepSpeedMax: 10
   grazeTimerMin: 3
   grazeTimerMax: 7
-  obedienceTimerMin: 3
-  obedienceTimerMax: 7
+  obedienceTimerMin: 5
+  obedienceTimerMax: 8
   barkDistance: 10
-  minFenceDistance: 5
+  minFenceDistance: 10
   rayLength: 0.4
 --- !u!65 &1673462232
 BoxCollider:
