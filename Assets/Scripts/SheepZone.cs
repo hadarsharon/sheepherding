@@ -9,7 +9,7 @@ public class SheepZone : MonoBehaviour
 
     private GameObject[] sheepArray;
 
-    private int sheepTotal => GameObject.FindGameObjectsWithTag("Sheep").Length;
+    private int sheepTotal => GameObject.FindGameObjectsWithTag("Sheep").Length + GameObject.FindGameObjectsWithTag("SheepInPen").Length;
 
     [SerializeField]
     private TMPro.TMP_Text sheepCounterUI;

@@ -21,6 +21,8 @@ public class SaveScoreUI : MonoBehaviour
     public void SaveScore()
     {
         GameStateManager.GameStateManagerSingleton.SaveScore(playerName.text, playersScore);
+        GameStateManager.GameStateManagerSingleton.ChangeGameState(GameStateManager.GameStates.ScoreBoard);
+
     }
     public void GoToMain()
     {
